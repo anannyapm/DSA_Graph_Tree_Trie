@@ -72,6 +72,6 @@ void main(List<String> args) {
   }
   inorder(root);
 
-  var out = closest(root,3 );
+  var out = closest(root,7 );
   out == null ? print("\nNo Data") : print("\n$out is the closest");
 }
