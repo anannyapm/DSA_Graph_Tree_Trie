@@ -3,12 +3,13 @@ import 'dart:io';
 class Heap {
   List<int> arr = [];
 
+  //insert is shift up where we start from bottom and go to top reorganizing
   void insert(int data) {
     arr.add(data);
     int index = arr.length - 1;
 
     int parent = parentnode(index); // take index of currently added value
-    while (index != 0 && arr[parent] > arr[index]) {
+    while (index != 0 && arr[parent] < arr[index]) {
       swap(index, parent);
       index = parent; //set index as current parent idx
       parent =
@@ -16,6 +17,8 @@ class Heap {
     }
     //while will run log n times and ie number of levels times will be the traversal here
   }
+
+  
 
   int delete() {
     //deletes the top most value ie here minumum
@@ -35,27 +38,28 @@ class Heap {
     return data;
   }
 
+  //heapify shifts down the value, ie starting from root(top) we re organize
   void _heapify(int index) {
     //O(log n)
     //take root, find its left and right child.
     int left = leftchild(index);
     int right = rightchild(index);
-    int minIdx = index;
+    int maxIdx = index;
     //compare left and right child with minidx and find min. Make that min parent.
 
     //left<arr.length means check for leaf node, those wont have left and right
     //in such cases index will be greater than length of array.
-    if (left < arr.length && arr[minIdx] > arr[left]) {
-      minIdx = left;
+    if (left < arr.length && arr[maxIdx] < arr[left]) {
+      maxIdx = left;
     }
 
-    if (right < arr.length && arr[minIdx] > arr[right]) {
-      minIdx = right;
+    if (right < arr.length && arr[maxIdx] < arr[right]) {
+      maxIdx = right;
     }
 
-    if (minIdx != index) {
-      swap(minIdx, index);
-      _heapify(minIdx);
+    if (maxIdx != index) {
+      swap(maxIdx, index);
+      _heapify(maxIdx);
     }
   }
 
@@ -68,6 +72,7 @@ class Heap {
       for (int i = 0; i < arr.length; i++) {
         stdout.write("${arr[i]} ");
       }
+      print("");
     }
   }
 
@@ -96,17 +101,19 @@ class Heap {
 
 void main(List<String> args) {
   Heap h = Heap();
+  h.insert(1);
+  h.insert(2);
+  h.insert(4);
+  h.insert(5);
   h.insert(3);
-  h.insert(10);
-  h.insert(28);
-  h.insert(12);
-  h.insert(22);
   h.insert(24);
   h.display();
 
   print("\ndeleting.....");
-  while (!h.isEmpty()) {
+  /* while (!h.isEmpty()) {
     print("${h.peek()} ");
     h.delete();
-  }
+  } */
+  h.delete();
+  print(h.arr);
 }
