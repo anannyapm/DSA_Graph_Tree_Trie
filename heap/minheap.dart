@@ -7,7 +7,7 @@ class Heap {
     arr.add(data);
     int index = arr.length - 1;
 
-    int parent = parentnode(index); // take index of currently added value
+    int parent = parentnode(index); // take index of currently added value and find parent
     while (index != 0 && arr[parent] > arr[index]) {
       swap(index, parent);
       index = parent; //set index as current parent idx
